@@ -1,0 +1,4 @@
+define [], () ->
+
+  (value) ->
+    value.trim()

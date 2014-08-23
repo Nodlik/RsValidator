@@ -1,0 +1,8 @@
+node_modules
+build
+.idea
+index.html
+src/js/*.js
+!src/js/test.js
+!src/js/almond.js
+src/js/packages/*

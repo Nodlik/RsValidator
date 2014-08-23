@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>RsValidate - Test</title>
+
+    <link rel="shortcut icon" type="image/png" href="src/js/packages/jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="src/js/packages/jasmine/jasmine.css">
+
+    <script type="text/javascript"  src="/src/js/packages/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript"  src="/build/js/main.js"></script>
+
+    <script type="text/javascript" src="src/js/packages/jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="src/js/packages/jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="src/js/packages/jasmine/boot.js"></script>
+
+    <script type="text/javascript" src="test/rs-validator-test.js"></script>
+
+
+    <script type="text/javascript">
+        jasmineEnv = jasmine.getEnv();
+
+        setTimeout(function() {
+            $(function() {
+                jasmineEnv.execute();
+            })
+
+        }, 10);
+    </script>
+</head>
+
+<body>
+
+</body>
+</html>
