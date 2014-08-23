@@ -22,13 +22,13 @@ module.exports = (grunt) ->
         options:
           baseUrl: 'src/js'
           out: 'build/js/main.js'
-          mainConfigFile: 'src/js/config.js'
+          mainConfigFile: 'src/js/test.js'
           optimize: 'none'
           name: 'almond',
           removeCombined: true
           almond: true,
-          include: ['config'],
-          insertRequire: ['config'],
+          include: ['test'],
+          insertRequire: ['test'],
           wrap:
             startFile: "src/js/intro.frag",
             endFile: "src/js/outro.frag"
@@ -84,6 +84,6 @@ module.exports = (grunt) ->
     'coffee'
     'requirejs:dist'
     'copy'
-    #'uglify'
+    'uglify'
     #'clean:requirejs'
   ])

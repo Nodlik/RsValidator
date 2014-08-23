@@ -54,6 +54,9 @@ define ['rs-state-transition'
         symbol = w
         state = state.process(this, w)
 
+      symbol = '\n'
+      state = state.process(this, symbol)
+
       return @data
 
     setTransition: (oldState, newState) ->

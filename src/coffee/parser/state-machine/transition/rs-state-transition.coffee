@@ -12,8 +12,9 @@ define [], () ->
           parser.word += symbol
 
         'new': (parser, symbol) ->
-          parser.data.push
-            word: parser.word
+          if parser.word != ""
+            parser.data.push
+              word: parser.word
 
           parser.word = ""
 
