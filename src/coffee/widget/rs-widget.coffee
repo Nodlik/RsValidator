@@ -113,6 +113,8 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
 
         return true
       else
+        @config.error(@, errors)
+
         if @config.isSetStatusClass()
           @$el.removeClass(@config.getSuccessClass())
           @$el.addClass(@config.getErrorClass())

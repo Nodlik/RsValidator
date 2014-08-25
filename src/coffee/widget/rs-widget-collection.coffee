@@ -20,6 +20,8 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
       for w in @widgets
         w.setLocale(lang)
 
+      @
+
     getSingleValue: () ->
       result = []
       if @widgets.length == 1
@@ -41,6 +43,8 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
     add: (widget) ->
       @widgets.push(widget)
 
+      @
+
     validate: () ->
       result = {}
 
@@ -59,3 +63,9 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
           result = false
 
       return result
+
+    addErrorText: (rule, text, lang = '') ->
+      for w in @widgets
+        w.addErrorText(rule, text, lang)
+
+      @
