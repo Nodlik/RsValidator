@@ -76,15 +76,17 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
         self.processForm($(@))
 
     processWidget: ($widget, firstNamespace = '') ->
-      if firstNamespace == ''
-        namespaces = ['_'];
-      else
+      namespaces = []
+      if firstNamespace != ''
         namespaces = [firstNamespace]
+
       if ($widget.data('_namespace'))
         namespaces = $widget.data('_namespace')
         namespaces = namespaces.split(',');
         if firstNamespace != ''
           namespaces.push(firstNamespace)
+
+      namespaces.push('_')
 
       widget = new RsWidget($widget, @validateController, @$parent)
       widget.setConfig(@config.settings)
