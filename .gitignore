@@ -1,5 +1,4 @@
 node_modules
-build
 .idea
 index.html
 src/js/*.js
