@@ -12,19 +12,27 @@ define [], () ->
         defaultErrorHandler: true # Обработчики ошибок по умолчанию
         onError: (widget, error) ->
 
+
         onValid: (widget) ->
+
+
+        onChange: (widget) ->
+
+
+      @change = @settings.onChange
+      @error = @settings.onError
+      @valid = @settings.onValid
+
 
     set: (settings) ->
       @settings = $.extend(@settings, settings);
 
+      @change = @settings.onChange
+      @error = @settings.onError
+      @valid = @settings.onValid
+
     getLocale: () ->
       @settings.locale
-
-    error: (widget, error) ->
-      @settings.onError(widget, error)
-
-    valid: (widget) ->
-      @settings.onValid(widget)
 
     isAutoValidate: () ->
       @settings.autoValidate

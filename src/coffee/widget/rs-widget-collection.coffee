@@ -1,12 +1,23 @@
 define ['rs-validator-settings'], (RsValidatorSettings) ->
 
   class RsWidgetCollection
-    constructor: () ->
+    constructor: (validator) ->
       @config = new RsValidatorSettings()
+      @validator = validator
+
       @widgets = []
 
     setConfig: (settings) ->
       @config.set(settings)
+
+      if 'onError' of settings
+        delete settings.onError
+
+      if 'onValid' of settings
+        delete settings.onValid
+
+      if 'onChange' of settings
+        delete settings.onChange
 
       for w in @widgets
         w.setConfig(settings)
@@ -43,13 +54,25 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
     add: (widget) ->
       @widgets.push(widget)
 
+      self = @
+      widget.on('change', (w) ->
+        self.config.change.apply(self.validator, [w])
+
+        if self.isValid()
+          self.config.valid.apply(self.validator, [w])
+        else
+          self.config.error.apply(self.validator, [w, []])
+      )
+
       @
 
     validate: () ->
       result = {}
 
       for w in @widgets
-        result[w.getName()] = w.validate()
+        errors = w.validate()
+        if errors.length
+          result[w.getName()] = w.validate()
 
       result
 

@@ -3,9 +3,11 @@ define ['rs-email-rule', 'rs-notBlank-rule', 'rs-range-rule'
                                 StringCast, ArrayCast, IntCast) ->
 
   class RsValidateController
-    constructor: () ->
+    constructor: (validator) ->
       @validators = {}
       @types = {}
+
+      @validator = validator
 
       @registerValidator('notBlank', NotBlankRule)
       @registerValidator('email', EmailRule)

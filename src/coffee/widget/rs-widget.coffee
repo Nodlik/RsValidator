@@ -19,6 +19,10 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
 
       @$errorPlace = $('[data-_place="' + @name + '"]', @$parent)
 
+      @_isValid = null
+
+      @handlers = {}
+
     init: () ->
       @$el.off('RsValidator')
       if @config.isLiveValidate()
@@ -30,6 +34,17 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
       @config.set(settings)
 
       @init()
+
+    trigger: (event) ->
+      if event of @handlers
+        for c in @handlers[event]
+          c.apply(@controller.validator, [@])
+
+    on: (event, callback) ->
+      if !(event of @handlers)
+        @handlers[event] = []
+
+      @handlers[event].push(callback)
 
     setLocale: (lang) ->
       @config.settings.locale = lang
@@ -101,8 +116,18 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
     process: () ->
       errors = @validate()
 
+      if @_isValid == null
+        @trigger('change')
+        @_isValid = (errors.length == 0)
+
       if errors.length == 0
-        @config.valid(@)
+        @trigger('valid')
+
+        if @_isValid == false
+          @_isValid = true
+          @trigger('change')
+
+        @config.valid.apply(@controller.validator, [@])
 
         if @config.isSetStatusClass()
           @$el.removeClass(@config.getErrorClass())
@@ -113,7 +138,13 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
 
         return true
       else
-        @config.error(@, errors)
+        @trigger('error')
+
+        if @_isValid == true
+          @_isValid = false
+          @trigger('change')
+
+        @config.error.apply(@controller.validator, [@, errors])
 
         if @config.isSetStatusClass()
           @$el.removeClass(@config.getSuccessClass())

@@ -1,8 +1,6 @@
 define [], () ->
 
   (value, options) ->
-    console.log(options)
-
     min = Number.NEGATIVE_INFINITY
     max = Number.POSITIVE_INFINITY
 

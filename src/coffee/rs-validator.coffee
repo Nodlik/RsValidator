@@ -6,7 +6,7 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
     constructor: () ->
       @config = new RsValidatorSettings()
       @selectorParser = new RsSelectorParser()
-      @validateController = new RsValidateController()
+      @validateController = new RsValidateController(@)
 
       @namespaces = {}
       @widgets = []
@@ -29,7 +29,7 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
     get: (selector) ->
       parsedResult = @selectorParser.parse(selector)
 
-      result = new RsWidgetCollection()
+      result = new RsWidgetCollection(@)
       for value in parsedResult
         if value.namespace of @namespaces
           if 'widget' of value
