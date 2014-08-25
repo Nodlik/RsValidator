@@ -18,7 +18,20 @@ module.exports = (grunt) ->
         tasks: ['coffee']
 
     requirejs:
-      dist:
+      prod:
+        options:
+          baseUrl: 'src/js'
+          out: 'build/js/main.js'
+          optimize: 'none'
+          name: 'almond',
+          removeCombined: true
+          almond: true,
+          include: ['rs-validator'],
+          insertRequire: ['rs-validator'],
+          wrap:
+            startFile: "src/js/intro.frag",
+            endFile: "src/js/outro.frag"
+      test:
         options:
           baseUrl: 'src/js'
           out: 'build/js/main.js'
@@ -38,27 +51,14 @@ module.exports = (grunt) ->
         src: ["build"]
       js:
         src: ["src/js/*", "!src/js/packages/**", "!src/js/test.js", "!src/js/test/**", "!src/js/intro.frag", "!src/js/outro.frag", "!src/js/almond.js"]
-      requirejs:
-        src: ["build/js/require.js"]
 
     uglify:
       dist:
         files: {
           'build/js/main.js': [
-            #'build/js/require.js'
             'build/js/main.js'
           ]
         }
-
-    copy:
-      requirejs:
-        files: [
-          {src: ['src/js/packages/requirejs/require.js'], dest: 'build/js/require.js'},
-        ]
-      images:
-        files: [
-          {expand: true, cwd: 'src/images/', src: ['**'], dest: 'build/images/'},
-        ]
 
   grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-watch'
@@ -68,22 +68,19 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
-  grunt.registerTask 'build-coffee', ['requirejs:dev']
-
-  grunt.registerTask('default', [
-    'clean'
-    'requirejs:dev'
-    'less'
-    'copy'
-    'watch'
-  ])
 
   grunt.registerTask('build', [
     'clean:build'
     'clean:js'
     'coffee'
-    'requirejs:dist'
-    'copy'
+    'requirejs:prod'
     'uglify'
-    #'clean:requirejs'
+  ])
+
+  grunt.registerTask('build:test', [
+    'clean:build'
+    'clean:js'
+    'coffee'
+    'requirejs:test'
+    'uglify'
   ])
