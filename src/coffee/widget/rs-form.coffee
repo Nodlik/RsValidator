@@ -5,11 +5,13 @@ define [], () ->
 
     constructor: ($form, validator) ->
       $el = $form
+      $el.attr('novalidate', 'novalidate')
+
       rsValidator = validator
 
       @name = _findName()
 
-      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate]', $el)
+      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"]', $el)
       self = @
       $items.each () ->
         if !($(@).prop('tagName') == 'FORM')
@@ -17,7 +19,10 @@ define [], () ->
 
       if (validator.getConfig().isAutoValidate()) || ($el.data('_role') == 'auto-validate')
         $el.on('submit.RsValidator', () ->
-          alert('validation')
+          widgets = rsValidator.get(self.name)
+
+          if (!widgets.process())
+            return false
         );
 
     getName: () ->

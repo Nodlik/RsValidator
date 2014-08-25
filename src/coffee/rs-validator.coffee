@@ -1,22 +1,30 @@
 define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namespace', 'rs-form',
-        'rs-selector-parser'], (RsValidatorSettings, RsWidget, RsWidgetCollection, RsNamespace, RsForm,
-                                RsSelectorParser) ->
+        'rs-selector-parser', 'rs-validate-controller'], (RsValidatorSettings, RsWidget, RsWidgetCollection, RsNamespace, RsForm,
+                                RsSelectorParser, RsValidateController) ->
 
   class RsValidator
     constructor: () ->
       @config = new RsValidatorSettings()
       @selectorParser = new RsSelectorParser()
+      @validateController = new RsValidateController()
 
       @namespaces = {}
       @widgets = []
 
-      @init()
-
     setConfig: (settings) ->
       @config.set(settings)
 
+      for w in @widgets
+        w.setConfig(settings)
+
     getConfig: () ->
       @config
+
+    setLocale: (lang) ->
+      @config.settings.locale = lang
+
+      for w in @widgets
+        w.setLocale(lang)
 
     get: (selector) ->
       parsedResult = @selectorParser.parse(selector)
@@ -48,15 +56,16 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       if ($parent == null)
         $parent = $('body')
 
+      @$parent = $parent
       @namespaces = {}
       @widgets = []
 
-      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate]', $parent).filter(
+      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"]', $parent).filter(
         () ->
           return $(@).closest('form').length == 0
       )
 
-      $forms = $('form[data-_role], form[data-_namespace], form[data-_name], form[data-_validate]', $parent)
+      $forms = $('form[data-_role], form[data-_namespace], form[data-_name], form[data-_validate="true"]', $parent)
 
       self = @
       $items.each () ->
@@ -77,7 +86,8 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
         if firstNamespace != ''
           namespaces.push(firstNamespace)
 
-      widget = new RsWidget($widget)
+      widget = new RsWidget($widget, @validateController, @$parent)
+      widget.setConfig(@config.settings)
 
       namespacesName = ''
       for namespace in namespaces

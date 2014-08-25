@@ -8,6 +8,9 @@ define ['rs-string-parser'], (RsStringParser) ->
         return _parseString(errors)
 
     _parseString = (errorString) ->
+      if !errorString
+        return {}
+
       parser = new RsStringParser()
       data = parser.parse(errorString)
 

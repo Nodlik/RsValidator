@@ -1,6 +1,9 @@
 define [], () ->
 
-  (value) ->
+  (value, needValidate = true) ->
+    if !needValidate
+      return true
+
     if !Array.isArray(value)
       return value != ""
 

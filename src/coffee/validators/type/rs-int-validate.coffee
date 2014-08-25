@@ -10,4 +10,4 @@ define ['rs-cast-error'], (RsCastError) ->
     if intval.toString() != val
       return new RsCastError('int', value)
 
-    return val
+    return intval

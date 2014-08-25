@@ -9,13 +9,13 @@ define [], () ->
         successClass: 'success'
         errorClass: 'error'
         setStatusClass: true # Добавлять ли success и error классы в зависимости от статуса валидации
-        defaultErrorHandler: true
+        defaultErrorHandler: true # Обработчики ошибок по умолчанию
         onError: (widget, error) ->
 
         onValid: (widget) ->
 
     set: (settings) ->
-      @settings = $.extend(settings);
+      @settings = $.extend(@settings, settings);
 
     getLocale: () ->
       @settings.locale
@@ -30,7 +30,7 @@ define [], () ->
       @settings.autoValidate
 
     isLiveValidate: () ->
-      @settings.autoValidate
+      @settings.liveValidate
 
     getSuccessClass: () ->
       @settings.successClass

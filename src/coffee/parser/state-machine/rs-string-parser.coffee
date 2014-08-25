@@ -50,6 +50,9 @@ define ['rs-state-transition'
       @parameter = ""
       @stringValue = ""
 
+      if str.trim() == ''
+        return []
+
       for w in str
         symbol = w
         state = state.process(this, w)
