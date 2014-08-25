@@ -1,10 +1,12 @@
 require(['rs-validator',
          'rs-error-parser', 'rs-email-rule',
          'rs-notBlank-rule', 'rs-string-parser',
-         'rs-rule-parser', 'rs-error-parser'], function (RsValidator, RsErrorParser,
+         'rs-rule-parser', 'rs-int-validate',
+         'rs-array-validate', 'rs-selector-parser'], function (RsValidator, RsErrorParser,
                                         RsEmailRule,
                                         RsNotBlankRule,
-                                        RsStringParser, RsRuleParser, RsErrorParser) {
+                                        RsStringParser, RsRuleParser, RsIntValidate,
+                                        RsArrayValidate, RsSelectorParser) {
     window.RsEmailRule = RsEmailRule;
     window.RsErrorParser = RsErrorParser;
     window.RsNotBlankRule = RsNotBlankRule;
@@ -13,5 +15,7 @@ require(['rs-validator',
     window.RsRuleParser = RsRuleParser;
     window.RsErrorParser = RsErrorParser;
 
-    new RsValidator();
+    window.RsIntValidate = RsIntValidate;
+    window.RsArrayValidate = RsArrayValidate;
+    window.RsSelectorParser = RsSelectorParser;
 });

@@ -18,6 +18,12 @@ describe("String parser test", function () {
         expect(parser.parse('one(0, 10), two, three(213, "qwe")'))
             .toContain({'word': 'one', 'parameters': ['0', '10']});
     });
+
+    it("Empty", function () {
+        var parser = new window.RsStringParser();
+        expect(parser.parse(''))
+            .toEqual([]);
+    });
 });
 
 describe("Rule parser test", function () {
@@ -31,6 +37,12 @@ describe("Rule parser test", function () {
         var parser = new window.RsRuleParser();
         expect(parser.parse('notBlank, range(10, 20)'))
             .toEqual({ "notBlank": true, "range": ['10', '20'] });
+    });
+
+    it("Empty", function () {
+        var parser = new window.RsRuleParser();
+        expect(parser.parse(''))
+            .toEqual({});
     });
 });
 
