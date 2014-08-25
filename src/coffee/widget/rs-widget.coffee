@@ -49,7 +49,7 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
         return ['type']
 
       for name, validator of @validators
-        if !(validator['func'](value, validator['data']))
+        if !(validator['func'](value, validator['body']))
           errors.push(name)
 
       errors

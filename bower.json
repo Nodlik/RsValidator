@@ -5,13 +5,14 @@
         "Nodlik <nndlik@gmail.com>"
     ],
     "private": false,
-    "main": "build/main.js",
+    "main": "build/js/main.js",
     "ignore": [
         "**/.*",
         "node_modules",
         "bower_components",
         "src/js/packages",
-        "test"
+        "test",
+        "test.html"
     ],
     "dependencies": {
         "jquery": "~2.1.1",

@@ -60,7 +60,7 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       @namespaces = {}
       @widgets = []
 
-      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"]', $parent).filter(
+      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"], [data-_type]', $parent).filter(
         () ->
           return $(@).closest('form').length == 0
       )

@@ -1,5 +1,5 @@
-define ['rs-email-rule', 'rs-notBlank-rule',
-        'rs-string-validate', 'rs-array-validate', 'rs-int-validate'], (EmailRule, NotBlankRule,
+define ['rs-email-rule', 'rs-notBlank-rule', 'rs-range-rule'
+        'rs-string-validate', 'rs-array-validate', 'rs-int-validate'], (EmailRule, NotBlankRule, RangeRule,
                                 StringCast, ArrayCast, IntCast) ->
 
   class RsValidateController
@@ -9,6 +9,7 @@ define ['rs-email-rule', 'rs-notBlank-rule',
 
       @registerValidator('notBlank', NotBlankRule)
       @registerValidator('email', EmailRule)
+      @registerValidator('range', RangeRule)
 
       @registerTypeCaster('string', StringCast)
       @registerTypeCaster('array', ArrayCast)
