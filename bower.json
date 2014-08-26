@@ -5,7 +5,7 @@
         "Nodlik <nndlik@gmail.com>"
     ],
     "private": false,
-    "main": "build/js/main.js",
+    "main": "build/rsvalidator.js",
     "ignore": [
         "**/.*",
         "node_modules",

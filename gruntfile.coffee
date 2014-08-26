@@ -21,7 +21,7 @@ module.exports = (grunt) ->
       prod:
         options:
           baseUrl: 'src/js'
-          out: 'build/js/main.js'
+          out: 'build/rsvalidator.js'
           optimize: 'none'
           name: 'almond',
           removeCombined: true
@@ -34,7 +34,7 @@ module.exports = (grunt) ->
       test:
         options:
           baseUrl: 'src/js'
-          out: 'build/js/main.js'
+          out: 'build/rsvalidator-tests.js'
           mainConfigFile: 'src/js/test.js'
           optimize: 'none'
           name: 'almond',
@@ -55,8 +55,8 @@ module.exports = (grunt) ->
     uglify:
       dist:
         files: {
-          'build/js/main.js': [
-            'build/js/main.js'
+          'build/rsvalidator.js': [
+            'build/rsvalidator.js'
           ]
         }
 
