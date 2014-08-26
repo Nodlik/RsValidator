@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Basic usage RsValidator</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/build/rsvalidator.js"></script>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            // Create new Validator Object
+            var v = new RsValidator();
+
+            // Set callback to all widget
+            v.setConfig({
+                onError: function(w) {
+                    w.$el.closest('.form-group').removeClass('has-success');
+                    w.$el.closest('.form-group').addClass('has-error');
+                },
+                onValid: function(w) {
+                    w.$el.closest('.form-group').removeClass('has-error');
+                    w.$el.closest('.form-group').addClass('has-success');
+                }
+            });
+
+            v.init($('#firstExample'));
+        })
+    </script>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h1>RsValidator</h1>
+        <hr />
+        <h3>SimpleForm</h3>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+<pre>
+&lt;input type=&quot;email&quot; class=&quot;form-control&quot; id=&quot;inputEmail&quot; placeholder=&quot;Email&quot;
+    <b>data-_rule=&quot;email, notBlank&quot;</b>
+    <b>data-_error='email(&quot;Invalid email format&quot;), notBlank(&quot;Please, insert email&quot;)'</b>
+/&gt;
+&lt;p class=&quot;text-danger&quot; data-_place=&quot;inputEmail&quot;&gt;&lt;/p&gt; &lt;!-- error place --&gt;
+
+
+&lt;input type=&quot;password&quot; class=&quot;form-control&quot; id=&quot;inputPassword&quot; placeholder=&quot;Password&quot;
+       <b>data-_rule=&quot;notBlank&quot;</b>
+       <b>data-_error='notBlank(&quot;Please, insert password&quot;)'</b>
+/&gt;
+&lt;p class=&quot;text-danger&quot; data-_place=&quot;inputPassword&quot;&gt;&lt;/p&gt;
+</pre>
+        </div>
+    </div>
+</div>
+<div class="row" id="firstExample">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <p></p>
+
+        <form class="form-horizontal" role="form" id="loginForm" data-_role="auto-validate" action="basic.html">
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email"
+                           data-_rule="email, notBlank"
+                           data-_error='email("Invalid email format"), notBlank("Please, insert email")'
+                    />
+                    <p class="text-danger" data-_place="inputEmail"></p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password"
+                           data-_rule="notBlank"
+                           data-_error='notBlank("Please, insert password")'
+                    />
+                    <p class="text-danger" data-_place="inputPassword"></p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <pre>
+// Create new Validator Object
+var v = new RsValidator();
+
+// Set callback to all widget for integration with twitter bootstrap
+v.setConfig({
+    onError: function(w) {
+        $parentBlock = w.$el.closest('.form-group');
+        $parentBlock.removeClass('has-success');
+        $parentBlock.addClass('has-error');
+    },
+    onValid: function(w) {
+        $parentBlock = w.$el.closest('.form-group');
+        $parentBlock.removeClass('has-error');
+        $parentBlock.addClass('has-success');
+    }
+});
+
+v.init();</pre>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        // Create new Validator Object
+        var v = new RsValidator();
+
+        // Set callback to all widget
+        v.setConfig({
+            onError: function(w) {
+                w.$el.closest('.form-group').removeClass('has-success');
+                w.$el.closest('.form-group').addClass('has-error');
+            },
+            onValid: function(w) {
+                w.$el.closest('.form-group').removeClass('has-error');
+                w.$el.closest('.form-group').addClass('has-success');
+            }
+        });
+
+        v.init($('#ajaxExample'));
+
+        $('#ajaxLoginForm').submit(function() {
+            if (!v.get('ajaxLoginForm').process())
+                return false;
+
+            alert('Sending ajax request');
+            return false;
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h3>Ajax Form</h3>
+        <hr />
+    </div>
+</div>
+
+<div class="row" id="ajaxExample">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <p></p>
+
+        <form class="form-horizontal" role="form" id="ajaxLoginForm" action="basic.html" data-_validate="true">
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+
+                    <input type="email" class="form-control" name="inputEmail" placeholder="Email"
+                           data-_rule="email, notBlank"
+                           data-_error='email("Invalid email format"), notBlank("Please, insert email")'
+                            />
+                    <p class="text-danger" data-_place="inputEmail"></p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+
+                    <input type="password" class="form-control" name="inputPassword" placeholder="Password"
+                           data-_rule="notBlank"
+                           data-_error='notBlank("Please, insert password")'
+                            />
+                    <p class="text-danger" data-_place="inputPassword"></p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <pre>
+// Create new Validator Object
+var v = new RsValidator();
+
+v.init($('#ajaxExample'));
+
+$('#ajaxLoginForm').submit(function() {
+    if (!v.get('ajaxLoginForm').process())
+        return false;
+
+    $.ajax({
+        url: '/'
+        data: v.get('ajaxLoginForm').getValue() // Get serialized data
+        ...
+    })
+
+    return false
+});
+        </pre>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function() {
+        var v = new RsValidator();
+
+        v.setConfig({
+            onError: function(w) {
+                w.$el.closest('.form-group').removeClass('has-success');
+                w.$el.closest('.form-group').addClass('has-error');
+            },
+            onValid: function(w) {
+                w.$el.closest('.form-group').removeClass('has-error');
+                w.$el.closest('.form-group').addClass('has-success');
+            }
+        });
+
+        v.init($('#widgetsExample'));
+
+        $('#getValuesButton').click(function() {
+            if ( v.get('widget').process() )
+                alert(JSON.stringify(  v.get('widget').getValue() ));
+
+            return false;
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h3>Widgets and type conversions</h3>
+        <hr />
+    </div>
+</div>
+
+<div class="row" id="widgetsExample">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <form class="form-horizontal" role="form" id="widget" action="basic.html" data-_validate="true">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="myCheckBox"
+                                   data-_type="bool"
+                                   data-_rule="equal(true)"
+                                   data-_error="equal(This value should be true)"
+                                    /> Check me
+                        </label>
+                        <p class="text-danger" data-_place="myCheckBox"></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Range number</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="myRangeNumber" placeholder="Input number from 10 to 29"
+                           data-_rule="range(10, 29), notBlank"
+                           data-_type="int"
+                           data-_error='range("Value should be from 10 to 29"), type("Value type not int"), notBlank("Please, input int from 10 to 29")'
+                    />
+                    <p class="text-danger" data-_place="myRangeNumber"></p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Email array</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="myEmail" placeholder="Input emails"
+                           data-_rule="email"
+                           data-_type="array(string)"
+                           data-_error='email("Invalid email format")'
+                    />
+                    <p class="text-danger" data-_place="myEmail"></p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Radio buttons</label>
+                <div class="col-sm-10">
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="myRadioButton" value="value1" checked
+                                   data-_rule="notEqual(value3)"
+                                   data-_error='notEqual("Please, do not select value 3")'
+                            />
+                            Value 1
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="myRadioButton" value="value2">
+                            Value 2
+                        </label>
+                    </div>
+                    <div class="radio disabled">
+                        <label>
+                            <input type="radio" name="myRadioButton" value="value3">
+                            Value 3
+                        </label>
+                    </div>
+                    <p class="text-danger" data-_place="myRadioButton"></p>
+
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Select</label>
+                <div class="col-sm-10">
+
+                    <select class="form-control" name="mySelect"
+                            data-_rule="equal(1)"
+                            data-_type="int"
+                            data-_error='equal("Please, select 1")'
+                            >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <p class="text-danger" data-_place="mySelect"></p>
+
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Multi select</label>
+                <div class="col-sm-10">
+
+                    <select class="form-control"  name="myMultiSelect" multiple
+                            data-_rule="range(2, 4)"
+                            data-_type="array(int)"
+                            data-_error='range("Please, select values from 2 to 4")'
+                            >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+
+                    <p class="text-danger" data-_place="myMultiSelect"></p>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="btn btn-default" id="getValuesButton">Get values</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-5">
+        <pre>
+$('#getValuesButton').click(function() {
+    if ( v.get('widget').process() )
+        alert(JSON.stringify(  v.get('widget').getValue() ));
+
+    return false;
+});
+        </pre>
+    </div>
+</div>
+
+<div style="height: 120px"></div>
+
+</body>
+</html>
