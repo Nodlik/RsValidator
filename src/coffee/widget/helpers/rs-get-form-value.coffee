@@ -9,9 +9,13 @@ define [], () ->
       if (@$el.prop('tagName') == 'INPUT')
         if (@$el.attr('type') == 'radio')
           return _getRadioButtonValue(@$el, @$parent)
+        if (@$el.attr('type') == 'checkbox')
+          return @$el.is(':checked');
+        return @$el.val()
+      if (@$el.prop('tagName') == 'SELECT')
         return @$el.val()
 
-      return null;
+      return @$el.text()
 
     _getRadioButtonValue = ($el, $parent) ->
       $items = $('input[type="radio"]', $parent).filter('[name="' + $el.attr('name') + '"]:checked')

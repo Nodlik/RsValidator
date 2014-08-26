@@ -25,10 +25,29 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
 
     init: () ->
       @$el.off('RsValidator')
+
+      if @$el.attr('type') == 'radio'
+        $('input[type="radio"]', @$parent).filter('[name="' + @$el.attr('name') + '"]').off('RsValidator')
+
       if @config.isLiveValidate()
-        @$el.on('keyup.RsValidator, change.RsValidator', () =>
-          @process()
-        );
+        if (@$el.attr('type') != 'checkbox') and (@$el.attr('type') != 'radio') and (@$el.prop('tagName') != 'SELECT')
+          @$el.on('keyup.RsValidator, change.RsValidator', () =>
+            @process()
+
+            true
+          )
+        else if (@$el.attr('type') == 'checkbox') or (@$el.prop('tagName') == 'SELECT')
+          @$el.on('click.RsValidator', () =>
+            @process()
+
+            true
+          )
+        else if (@$el.attr('type') == 'radio')
+          $('input[type="radio"]', @$parent).filter('[name="' + @$el.attr('name') + '"]').on('click.RsValidator', () =>
+            @process()
+
+            true
+          )
 
     addRule: (rule, option) ->
       rules = {}
