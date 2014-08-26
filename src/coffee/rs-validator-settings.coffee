@@ -10,6 +10,7 @@ define [], () ->
         errorClass: 'error'
         setStatusClass: true # Добавлять ли success и error классы в зависимости от статуса валидации
         defaultErrorHandler: true # Обработчики ошибок по умолчанию
+        globalNamespace: false,
         onError: (widget, error) ->
 
 
@@ -51,3 +52,6 @@ define [], () ->
 
     useDefaultErrorHandler: () ->
       @settings.defaultErrorHandler
+
+    useGlobalNamespace: () ->
+      @settings.globalNamespace

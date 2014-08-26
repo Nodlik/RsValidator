@@ -1,6 +1,6 @@
 define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namespace', 'rs-form',
         'rs-selector-parser', 'rs-validate-controller'], (RsValidatorSettings, RsWidget, RsWidgetCollection, RsNamespace, RsForm,
-                                RsSelectorParser, RsValidateController) ->
+                                                          RsSelectorParser, RsValidateController) ->
 
   class RsValidator
     constructor: () ->
@@ -10,6 +10,9 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
 
       @namespaces = {}
       @widgets = []
+
+    getValidateController: () ->
+      @validateController
 
     setConfig: (settings) ->
       @config.set(settings)
@@ -86,7 +89,8 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
         if firstNamespace != ''
           namespaces.push(firstNamespace)
 
-      namespaces.push('_')
+      if (namespaces.length == 0) or (@config.useGlobalNamespace())
+        namespaces.push('_')
 
       widget = new RsWidget($widget, @validateController, @$parent)
       widget.setConfig(@config.settings)
