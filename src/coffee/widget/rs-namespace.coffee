@@ -7,7 +7,7 @@ define [], () ->
 
     add: (widget) ->
       if widget.getName() of @widgets
-        throw new Error('Widget whit this name and namespace already added')
+        throw new Error('Widget whit this name and namespace already added: "' + @name +  '.' + widget.getName() + '"')
 
       @widgets[widget.getName()] = widget
 

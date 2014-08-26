@@ -26,7 +26,7 @@ define [], () ->
       val = [val]
 
     for v in val
-      if (v < min) or (v > max)
+      if (!isNaN(v) and (v != "")) and ((v < min) or (v > max))
         return false
 
     return true

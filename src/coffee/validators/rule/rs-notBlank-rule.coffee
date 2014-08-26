@@ -1,6 +1,7 @@
 define [], () ->
 
   (value, needValidate = true) ->
+
     if !needValidate
       return true
 

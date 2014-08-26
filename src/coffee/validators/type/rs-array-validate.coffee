@@ -1,12 +1,20 @@
 define ['rs-cast-error'], (RsCastError) ->
 
   (value, data = []) ->
-    if (Array.isArray(value))
-      return value
+    values = []
+    result = []
 
-    delimiter = ','
-    if data.length == 2
-      delimiter = data[1]
+    if (Array.isArray(value))
+      values =  value
+    else
+      if (value == "") or (value == null)
+        return []
+
+      delimiter = ','
+      if data.length == 2
+        delimiter = data[1]
+
+      values = value.split(delimiter)
 
     itemCaster = this.types['string']
     if data.length > 0
@@ -15,8 +23,6 @@ define ['rs-cast-error'], (RsCastError) ->
 
       itemCaster = this.types[data[0]]
 
-    result = []
-    values = value.split(delimiter)
     for val in values
       castedValue = itemCaster.apply(this, [val.trim()])
       if castedValue instanceof RsCastError

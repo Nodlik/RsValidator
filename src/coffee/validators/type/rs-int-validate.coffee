@@ -2,6 +2,9 @@ define ['rs-cast-error'], (RsCastError) ->
 
   (value) ->
     val = value.trim()
+    if val == ''
+      return ''
+
     intval = parseInt(val)
 
     if (isNaN(intval))
