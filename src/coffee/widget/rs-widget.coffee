@@ -30,6 +30,15 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
           @process()
         );
 
+    addRule: (rule, option) ->
+      rules = {}
+      rules[rule] = option
+
+      @validators = $.extend(@validators, @controller.get(rules));
+
+    addRules: (rules) ->
+      @validators = $.extend(@validators, @controller.get(rules));
+
     setConfig: (settings) ->
       @config.set(settings)
 

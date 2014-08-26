@@ -22,6 +22,8 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
       for w in @widgets
         w.setConfig(settings)
 
+      @
+
     getConfig: () ->
       @config
 
@@ -90,5 +92,24 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
     addErrorText: (rule, text, lang = '') ->
       for w in @widgets
         w.addErrorText(rule, text, lang)
+
+      @
+
+    renderError: (errors) ->
+      for w in @widgets
+        w._isValid = false
+        w.renderError(errors)
+
+      @
+
+    addRule: (rule, option = true) ->
+      for w in @widgets
+        w.addRule(rule, option)
+
+      @
+
+    addRules: (rules) ->
+      for w in @widgets
+        w.addRules(rules)
 
       @
