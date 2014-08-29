@@ -53,6 +53,9 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
 
       result
 
+    val: () ->
+      @getSingleValue()
+
     add: (widget) ->
       @widgets.push(widget)
 

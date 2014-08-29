@@ -29,10 +29,13 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       for w in @widgets
         w.setLocale(lang)
 
-    get: (selector) ->
+    get: (selector, collection = null) ->
       parsedResult = @selectorParser.parse(selector)
 
-      result = new RsWidgetCollection(@)
+      result = collection
+      if (result == null)
+        result = new RsWidgetCollection(@)
+
       for value in parsedResult
         if value.namespace of @namespaces
           if 'widget' of value
@@ -74,13 +77,19 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       @
 
     addWidget: ($widget, namespace = '', $parent = null) ->
-      if !($widget.prop('tagName') == 'FORM')
-        w = @processWidget($widget, namespace, $parent)
+      collection = new RsWidgetCollection(@);
 
-        return (new RsWidgetCollection(@)).add(w)
-      else
-        form = @processForm($widget)
-        return @get(form.getName())
+      self = this;
+      $widget.each(() ->
+        if !($(this).prop('tagName') == 'FORM')
+          w = self.processWidget($(this), namespace, $parent)
+          collection.add(w)
+        else
+          form = self.processForm ($widget)
+          self.get(form.getName(), collection)
+      )
+
+      collection
 
     init: ($parent = null) ->
       if ($parent == null)
