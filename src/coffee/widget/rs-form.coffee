@@ -15,7 +15,7 @@ define [], () ->
       self = @
       $items.each () ->
         if !($(@).prop('tagName') == 'FORM')
-          rsValidator.processWidget($(@), self.name)
+          rsValidator.addWidget($(@), self.name, $el)
 
       if (validator.getConfig().isAutoValidate()) || ($el.data('_role') == 'auto-validate')
         $el.on('submit.RsValidator', () ->

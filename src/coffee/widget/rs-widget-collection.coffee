@@ -53,6 +53,9 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
 
       result
 
+    val: () ->
+      @getSingleValue()
+
     add: (widget) ->
       @widgets.push(widget)
 
@@ -67,6 +70,15 @@ define ['rs-validator-settings'], (RsValidatorSettings) ->
       )
 
       @
+
+    getWidget: () ->
+      if @widget.length > 0
+        return @widgets[0]
+
+      throw new Error('Widgets list is empty')
+
+    getWidgets: () ->
+      @widgets
 
     validate: () ->
       result = {}

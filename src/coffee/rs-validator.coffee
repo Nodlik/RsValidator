@@ -29,10 +29,13 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       for w in @widgets
         w.setLocale(lang)
 
-    get: (selector) ->
+    get: (selector, collection = null) ->
       parsedResult = @selectorParser.parse(selector)
 
-      result = new RsWidgetCollection(@)
+      result = collection
+      if (result == null)
+        result = new RsWidgetCollection(@)
+
       for value in parsedResult
         if value.namespace of @namespaces
           if 'widget' of value
@@ -55,30 +58,59 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
 
       result
 
-    init: ($parent = null) ->
-      if ($parent == null)
-        $parent = $('body')
-
-      @$parent = $parent
-      @namespaces = {}
-      @widgets = []
-
-      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"], [data-_type]', $parent).filter(
+    addScope: ($scope) ->
+      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"], [data-_type]', $scope).filter(
         () ->
           return $(@).closest('form').length == 0
       )
 
-      $forms = $('form[data-_role], form[data-_namespace], form[data-_name], form[data-_validate="true"]', $parent)
+      $forms = $('form[data-_role], form[data-_namespace], form[data-_name], form[data-_validate="true"]', $scope)
 
       self = @
       $items.each () ->
         if !($(@).prop('tagName') == 'FORM')
-          self.processWidget($(@))
+          self.processWidget($(@), '', $scope)
 
       $forms.each () ->
         self.processForm($(@))
 
-    processWidget: ($widget, firstNamespace = '') ->
+      @
+
+    addWidget: ($widget, namespace = '', $parent = null) ->
+      collection = new RsWidgetCollection(@);
+
+      self = this;
+      $widget.each(() ->
+        if !($(this).prop('tagName') == 'FORM')
+          w = self.processWidget($(this), namespace, $parent)
+          collection.add(w)
+        else
+          form = self.processForm ($widget)
+          self.get(form.getName(), collection)
+      )
+
+      collection
+
+    init: ($parent = null) ->
+      if ($parent == null)
+        $parent = $('body')
+
+      @namespaces = {}
+      @widgets = []
+
+      @addScope($parent)
+
+    getNamespace: (namespace) ->
+      if !(namespace of @namespaces)
+        newNamespace = new RsNamespace(namespace)
+        @namespaces[namespace] = newNamespace
+
+      @namespaces[namespace]
+
+    processForm: ($form) ->
+      new RsForm($form, @)
+
+    processWidget: ($widget, firstNamespace = '', $parent = null) ->
       namespaces = []
       if firstNamespace != ''
         namespaces = [firstNamespace]
@@ -92,7 +124,7 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
       if (namespaces.length == 0) or (@config.useGlobalNamespace())
         namespaces.push('_')
 
-      widget = new RsWidget($widget, @validateController, @$parent)
+      widget = new RsWidget($widget, @validateController, $parent)
       widget.setConfig(@config.settings)
 
       namespacesName = ''
@@ -104,13 +136,4 @@ define ['rs-validator-settings', 'rs-widget', 'rs-widget-collection', 'rs-namesp
 
       @widgets.push( widget )
 
-
-    getNamespace: (namespace) ->
-      if !(namespace of @namespaces)
-        newNamespace = new RsNamespace(namespace)
-        @namespaces[namespace] = newNamespace
-
-      @namespaces[namespace]
-
-    processForm: ($form) ->
-      new RsForm($form, @)
+      widget

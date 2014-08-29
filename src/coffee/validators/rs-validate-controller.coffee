@@ -1,10 +1,16 @@
 define ['rs-email-rule', 'rs-notBlank-rule', 'rs-range-rule'
         'rs-string-validate', 'rs-array-validate', 'rs-int-validate',
         'rs-equal-rule', 'rs-bool-validate',
-        'rs-notEqual-rule'], (EmailRule, NotBlankRule, RangeRule,
-                           StringCast, ArrayCast, IntCast
-                           EqualRule, BoolCast,
-                           NotEqualRule) ->
+        'rs-notEqual-rule', 'rs-double-validate'
+        'rs-length-rule', 'rs-arrayLength-rule',
+        'rs-contain-rule', 'rs-notContain-rule',
+        'rs-pattern-rule'], (EmailRule, NotBlankRule, RangeRule,
+                             StringCast, ArrayCast, IntCast
+                             EqualRule, BoolCast,
+                             NotEqualRule, DoubleCast,
+                             LengthRule, ArrayLengthRule,
+                             ContainRule, NotContainRule,
+                             PatternRule) ->
 
   class RsValidateController
     constructor: (validator) ->
@@ -18,11 +24,17 @@ define ['rs-email-rule', 'rs-notBlank-rule', 'rs-range-rule'
       @registerValidator('range', RangeRule)
       @registerValidator('equal', EqualRule)
       @registerValidator('notEqual', NotEqualRule)
+      @registerValidator('length', LengthRule)
+      @registerValidator('arrayLength', ArrayLengthRule)
+      @registerValidator('contain', ContainRule)
+      @registerValidator('notContain', NotContainRule)
+      @registerValidator('pattern', PatternRule)
 
       @registerTypeCaster('string', StringCast)
       @registerTypeCaster('array', ArrayCast)
       @registerTypeCaster('int', IntCast)
       @registerTypeCaster('bool', BoolCast)
+      @registerTypeCaster('double', DoubleCast)
 
     registerValidator: (validatorName, validateFunction) ->
       @validators[validatorName] = validateFunction

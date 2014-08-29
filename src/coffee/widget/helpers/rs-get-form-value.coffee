@@ -10,9 +10,11 @@ define [], () ->
         if (@$el.attr('type') == 'radio')
           return _getRadioButtonValue(@$el, @$parent)
         if (@$el.attr('type') == 'checkbox')
-          return @$el.is(':checked');
+          return @$el.is(':checked')
         return @$el.val()
       if (@$el.prop('tagName') == 'SELECT')
+        return @$el.val()
+      if (@$el.prop('tagName') == 'TEXTAREA')
         return @$el.val()
 
       return @$el.text()
