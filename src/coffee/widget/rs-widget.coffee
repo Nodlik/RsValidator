@@ -5,9 +5,12 @@ define ['rs-validator-settings', 'rs-widget-rule-reader',
                                                 RsGetFormValue, RsCastError) ->
 
   class RsWidget
-    constructor: ($widget, validateController, $parent) ->
+    constructor: ($widget, validateController, $parent = null) ->
       @$el = $widget
       @$parent = $parent
+
+      if (@$parent == null)
+        @$parent = $("body")
 
       @name = @_findName()
       @controller = validateController

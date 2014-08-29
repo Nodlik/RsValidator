@@ -17,7 +17,7 @@ define ['rs-string-parser'], (RsStringParser) ->
 
     if $widget.attr('type') == 'number'
       return {
-        'type': 'number'
+        'type': 'double'
       }
 
     {
