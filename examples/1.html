@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Basic usage RsValidator</title>
+    <title>Simple login form</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="build/rsvalidator.js"></script>
@@ -38,6 +38,14 @@
 
                 return false;
             });
+
+            $('.langChange').click(function(){
+                v.setLocale($(this).data('lang'));
+
+                v.get('loginForm').process();
+
+                return false;
+            });
         })
     </script>
 </head>
@@ -52,7 +60,7 @@
 <div class="row" id="firstExample">
     <div class="col-md-1"></div>
     <div class="col-md-5">
-        <p></p>
+        <p style="text-align: right"><a href="#lang" class="langChange" data-lang="en">English</a>,  <a href="#lang" class="langChange" data-lang="ru">Русский</a></p>
 
         <form class="form-horizontal" role="form" id="loginForm" data-_validate="true" action="/">
             <div class="form-group">
