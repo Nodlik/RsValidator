@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Rsvalidator : Simple javascript lib for html form validation">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Rsvalidator</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Nodlik/RsValidator">View on GitHub</a>
+
+          <h1 id="project_title">Rsvalidator</h1>
+          <h2 id="project_tagline">Simple javascript lib for html form validation</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Nodlik/RsValidator/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Nodlik/RsValidator/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="rsvalidator" class="anchor" href="#rsvalidator"><span class="octicon octicon-link"></span></a>RsValidator</h1>
+
+<h3>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h3>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>bower install rsvalidator
+</pre></div>
+
+<h3>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h3>
+
+<p>Create new RsValidator object, and after loading of a form or field make <em>init()</em></p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RsValidator</span><span class="p">();</span>
+<span class="nx">v</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+</pre></div>
+
+<p>Example validate input with number from 10 to 29:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"myRangeNumber"</span> <span class="na">placeholder=</span><span class="s">"Input number from 10 to 29"</span>
+    <span class="na">data-_rule=</span><span class="s">"range(10, 29), notBlank"</span>
+    <span class="na">data-_type=</span><span class="s">"int"</span>
+    <span class="na">data-_error=</span><span class="s">'range("Value should be from 10 to 29"), type("Value type not int"), notBlank("Please, input int from 10 to 29")'</span>
+<span class="nt">/&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">data-_place=</span><span class="s">"myRangeNumber"</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+
+<p>Error message will be added on DOM element with a data attribute <em>_place</em>="{ inputName }"</p>
+
+<h3>
+<a name="available-rules" class="anchor" href="#available-rules"><span class="octicon octicon-link"></span></a>Available rules</h3>
+
+<pre><code>* notBlank
+* email
+* range(min, max)
+* equal(value)
+* notEqual(value)
+</code></pre>
+
+<h3>
+<a name="localization" class="anchor" href="#localization"><span class="octicon octicon-link"></span></a>Localization</h3>
+
+<p>You can localize error message. For example:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"test"</span>
+    <span class="na">data-_rule=</span><span class="s">"notBlank"</span>
+    <span class="na">data-_error=</span><span class="s">'notBlank("en": "Value cant be empty", "fr": "La signification ne peut pas être vide")'</span>
+<span class="nt">/&gt;</span>
+</pre></div>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RsValidator</span><span class="p">();</span>
+<span class="nx">v</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+
+<span class="nx">v</span><span class="p">.</span><span class="nx">setLocale</span><span class="p">(</span><span class="s1">'en'</span><span class="p">);</span>
+</pre></div>
+
+<p>Method <em>setLocale</em> can be called at any time</p>
+
+<h3>
+<a name="type-conversion" class="anchor" href="#type-conversion"><span class="octicon octicon-link"></span></a>Type conversion</h3>
+
+<p>For any widget you can set value type:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"emailsList"</span>
+    <span class="na">data-_rule=</span><span class="s">"email"</span>
+    <span class="na">data-_type=</span><span class="s">"array(string)"</span>
+<span class="nt">/&gt;</span>
+
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"age"</span>
+    <span class="na">data-_type=</span><span class="s">"int"</span>
+<span class="nt">/&gt;</span>
+</pre></div>
+
+<p>Available types</p>
+
+<pre><code>* string
+* array(type)
+* int
+* double
+* bool
+</code></pre>
+
+<p>Information in README file not full, please, look at examples!</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Rsvalidator maintained by <a href="https://github.com/Nodlik">Nodlik</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
