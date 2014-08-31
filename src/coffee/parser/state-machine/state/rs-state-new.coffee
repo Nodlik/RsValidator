@@ -6,7 +6,7 @@ define [], () ->
         parser.setTransition('new', 'word')
         return parser.state.word()
 
-      if w == ' '
+      if w == ' ' or w == '\n' or w == '\r'
         return @
 
       throw new Error('Invalid lexeme "' + w + '"');

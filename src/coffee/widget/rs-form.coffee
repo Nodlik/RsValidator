@@ -11,7 +11,7 @@ define [], () ->
 
       @name = _findName()
 
-      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"]', $el)
+      $items = $('[data-_rule], [data-_namespace], [data-_error], [data-_name], [data-_validate="true"], [data-_type]', $el)
       self = @
       $items.each () ->
         if !($(@).prop('tagName') == 'FORM')

@@ -11,7 +11,7 @@ define [], () ->
         parser.setTransition('parametersStart', 'stringStart')
         return parser.state.stringStart()
 
-      if w == ' '
+      if w == ' ' or w == '\n' or w == '\r'
         return @
 
       throw new Error('Invalid lexeme "' + w + '"');

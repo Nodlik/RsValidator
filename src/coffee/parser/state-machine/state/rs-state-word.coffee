@@ -6,6 +6,10 @@ define [], () ->
         parser.setTransition('word', 'new')
         return parser.state.new()
 
+      if w == '\r'
+        parser.setTransition('word', 'new')
+        return parser.state.new()
+
       if /[a-zA-Z]/.test(w)
         parser.setTransition('word', 'word')
         return @
